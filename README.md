@@ -32,15 +32,15 @@ In the marketing environment, churn is important because:
 Convert raw demographic, usage, and billing data into meaningful features that reflect real customer behavior and engagement.  
 This includes engineering features related to customer tenure, service adoption, activity levels, and pricing exposure to better explain *why* customers churn.
 **Key Question:** Which customer behaviors and characteristics are most strongly associated with churn?
----
+
 ### 2. Identify High-Risk Customers and Churn Patterns
 Leverage engineered features and exploratory analysis to compare churned vs non-churned customers, uncovering patterns related to tenure, usage intensity, and engagement levels.
 **Key Question:** Which customer segments are at the highest risk of churning, and what patterns distinguish them?
----
+
 ### 3. Build an Interpretable Churn Prediction Model
 Train classification model (Logistic Regression) to predict churn while maintaining interpretability, enabling stakeholders to understand the drivers behind model predictions.
 **Key Question:** Can we reliably predict churn using behavior-driven features rather than raw data alone?
----
+
 ### 4. Translate Insights into Actionable Retention Strategies
 Use model outputs and postdictive analysis to recommend targeted business actions, prioritizing customers most at risk and identifying practical interventions to reduce churn.
 **Key Question:** How can the business proactively reduce churn using data-driven insights?
