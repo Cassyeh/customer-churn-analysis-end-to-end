@@ -97,10 +97,11 @@ customer-churn-analysis-end-to-end/
 │   └── 04_churn_modeling.ipynb
 │
 ├── scripts/
-│   ├── 01_data_cleaning.py        # Python version of data cleaning notebook
+│   ├── data_cleaning.py           # Python version of data cleaning notebook
 │   ├── 02_exploratory_analysis.py # Python version of EDA notebook
 │   ├── 03_feature_engineering.py  # Python version of feature engineering notebook
 │   └── 04_churn_modeling.py       # Python version of modeling notebook
+│   └── churn_main.py              # Entry point of code
 │
 ├── src/
 │   ├── data_preprocessing.py      # Reusable data preparation functions
