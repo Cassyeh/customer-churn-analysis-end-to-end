@@ -41,6 +41,13 @@ def clean_data(raw_df, target_variable):
     missing_summary = cleaned_df.isnull().sum()
     missing_summary = missing_summary[missing_summary > 0]
     print(missing_summary)
+    if missing_summary.empty:
+        # Count empty strings in each column
+        empty_counts = cleaned_df.apply(
+            lambda col: (col.str.strip() == '').sum() if col.dtype == 'object' else 0
+        ) #only columns with dtype object (strings) can contain empty strings ('')
+        empty_counts = empty_counts[empty_counts > 0]  # only show columns with >0 empty strings
+        print(empty_counts)
 
     print("Data cleaning complete.")
     return cleaned_df
