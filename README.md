@@ -98,8 +98,8 @@ customer-churn-analysis-end-to-end/
 │
 ├── scripts/
 │   ├── data_cleaning.py           # Python version of data cleaning notebook
-│   ├── 02_exploratory_analysis.py # Python version of EDA notebook
-│   ├── 03_feature_engineering.py  # Python version of feature engineering notebook
+│   ├── exploratory_analysis.py # Python version of EDA notebook
+│   ├── feature_engineering_all.py  # Python version of feature engineering notebook
 │   └── 04_churn_modeling.py       # Python version of modeling notebook
 │   └── churn_main.py              # Entry point of code
 │

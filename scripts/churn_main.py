@@ -8,11 +8,12 @@ sys.path.append(str(PROJECT_ROOT))
 from src.utils import download_file_from_google_drive, load_data_csv, save_data
 from data_cleaning import clean_data, convert_yes_no_columns, impute_zero_tenure_values
 from exploratory_analysis import plot_churn_counts, plot_service_vs_churn, plot_tenure_eda, plot_contract_eda
+from feature_engineering_all import create_all_features, save_features_to_excel, feature_correlation
 
 file_id = "1763OlxZ9Fun9-x3GYi6BUu_7ot9AfEkJ"   # replace with  file ID
 destination = "./data/raw/telco_customer_churn_data.csv"  # local file name
 
-#download_file_from_google_drive(file_id, destination)
+download_file_from_google_drive(file_id, destination)
 
 # Paths
 RAW_DATA_PATH = destination
@@ -26,7 +27,7 @@ clean_df = clean_data(raw_df, "Churn")
 zero_one_bool_df = convert_yes_no_columns(clean_df)
 filled_total_charges_df = impute_zero_tenure_values(zero_one_bool_df, "TotalCharges")
 
-#save_data(filled_total_charges_df, PROCESSED_DATA_PATH)
+save_data(filled_total_charges_df, PROCESSED_DATA_PATH)
 
 #EDA
 churn_visual_path = './visuals/eda/churn_count_eval.png'
@@ -59,3 +60,19 @@ plot_tenure_eda(filled_total_charges_df, title="Count by Tenure", save_path=tenu
 
 contract_visual_path = './visuals/eda/contract_churned_eval.png'
 plot_contract_eda(filled_total_charges_df, title="Contract vs Churn Rate", save_path=contract_visual_path)
+
+# Feature Engineering
+FEATURES_DATA_PATH = "./data/processed/telco_customer_churn_features_data.xlsx"
+df_features, columns_to_add, sheet_names = create_all_features(filled_total_charges_df)
+
+save_features_to_excel(df_features, columns_to_add, FEATURES_DATA_PATH, sheet_names)
+
+ALL_FEATURES_DATA_PATH = "./data/processed/telco_customer_churn_all_features_data.csv"
+save_data(df_features, ALL_FEATURES_DATA_PATH)
+
+corr_cols = ["Churn", "tenure_normalized", "avg_monthly_spend", 
+             "lifetime_value", "num_active_services", "fiber_customer_flag",
+             "household_size", "is_month_to_month", "payment_auto_flag"]
+weighted_features_df = df_features[corr_cols]
+features_visual_path = './visuals/eda/features_correlation_eval.png'
+feature_correlation (weighted_features_df, features_visual_path)
