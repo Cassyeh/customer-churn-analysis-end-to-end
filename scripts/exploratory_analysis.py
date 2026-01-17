@@ -249,4 +249,45 @@ def plot_tenure_eda(df, tenure_col="tenure", churn_col="Churn", title=None, save
     print(f"{tenure_col} range Plot saved to {save_path}")
 
 
+def plot_contract_eda(df, contract_col="Contract", churn_col="Churn", title=None, save_path='visuals/eda/eval.png'):
+    """
+    Exploratory Data Analysis for tenure.
+    Parameters:
+    df(pd.DataFrame): DataFrame containing the columns
+    contract_col(str): Column name for the tenure column
+    churn_col(str, default 'Churn'): Column name for churn labels
+    save_path(str, default):'visuals/eda': Path to save the plot image
+    """
+    data = df.copy()
+    total_contract_counts = data.groupby(contract_col).size()
+    contract_churn_total = (
+        data.groupby(contract_col)[churn_col].apply(lambda x: (x == 1).sum())
+        ) # x == 1, represents 'Churn' == 'Yes'
+    # Compute churn rate, mean applies avg
+    churn_rate = contract_churn_total / total_contract_counts
+    churn_contract_summary = pd.DataFrame({
+        "TotalCustomers": total_contract_counts,
+        "ChurnedCustomers": contract_churn_total,
+        "ChurnRate": churn_rate
+    })
+    #print(churn_contract_summary)
 
+    # --- Plot ---
+    fig, ax1 = plt.subplots(figsize=(8,6))
+
+    # Primary axis: churn rate
+    sns.barplot(x=churn_contract_summary.index, y=churn_contract_summary["ChurnRate"],palette="Set2",ax=ax1)
+    ax1.set_ylim(0, 1)
+    ax1.set_ylabel("Churn Rate", color="green", fontsize=12)
+    ax1.set_xlabel(f"{contract_col} (0 = No, 1 = Yes)")
+    ax1.set_title(title)
+
+    # Annotate churn rate on bars
+    for i, rate in enumerate(churn_contract_summary["ChurnRate"]):
+        ax1.text(i, rate + 0.01, f"{rate:.2%}", ha="center", fontsize=10, color="green")
+    
+    # --- Create folder if it doesn't exist ---
+    os.makedirs(os.path.dirname(save_path), exist_ok=True) 
+    # --- Save plot ---
+    plt.savefig(save_path, dpi=500, bbox_inches='tight')
+    print(f"{contract_col} Plot saved to {save_path}")

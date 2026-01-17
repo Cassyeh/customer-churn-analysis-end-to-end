@@ -7,7 +7,7 @@ sys.path.append(str(PROJECT_ROOT))
 
 from src.utils import download_file_from_google_drive, load_data_csv, save_data
 from data_cleaning import clean_data, convert_yes_no_columns, impute_zero_tenure_values
-from exploratory_analysis import plot_churn_counts, plot_service_vs_churn, plot_tenure_eda
+from exploratory_analysis import plot_churn_counts, plot_service_vs_churn, plot_tenure_eda, plot_contract_eda
 
 file_id = "1763OlxZ9Fun9-x3GYi6BUu_7ot9AfEkJ"   # replace with  file ID
 destination = "./data/raw/telco_customer_churn_data.csv"  # local file name
@@ -55,4 +55,7 @@ add_ons_service_title = f"{addon_cols} Service vs Churn Rate"
 plot_service_vs_churn(filled_total_charges_df, service_col=addon_cols, eligible_condition = "InternetService != 'No'", title=add_ons_service_title,save_path=add_ons_service_visual_path)
 
 tenure_visual_path = './visuals/eda/tenure_count_eval.png'
-plot_tenure_eda(filled_total_charges_df, tenure_col="tenure", title="Count by Tenure", save_path=tenure_visual_path)
+plot_tenure_eda(filled_total_charges_df, title="Count by Tenure", save_path=tenure_visual_path)
+
+contract_visual_path = './visuals/eda/contract_churned_eval.png'
+plot_contract_eda(filled_total_charges_df, title="Contract vs Churn Rate", save_path=contract_visual_path)
